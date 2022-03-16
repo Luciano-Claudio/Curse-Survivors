@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bc27f3e9a73e4d468c6547e892619bd, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  AnimController: {fileID: 0}
+  Name: Test
+  Armor: 0
+  Life: 100
+  Damage: 100
+  Recovery: 0
+  LifeDrain: 0
+  Magnet: 0
+  Lucky: 0
+  Cooldown: 0
+  AtkSpeed: 0
+  Speed: 2
+  Duration: 0
+  Area: 0
+  ExpGain: 0
+  MoreCoin: 0
+  Amount: 0
+  Revival: 0
+  FirstWeapon: {fileID: 0}
+  SecondWeapon: {fileID: 0}
