@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -33,10 +33,10 @@ public class EnemyController : MonoBehaviour
 
 
 
-    private AIPath enemyPath;
-    private AIDestinationSetter destination;
-
     private int i = 0;
+
+    [SerializeField] private NavMeshAgent mapMesh;
+    [SerializeField] private EnemyPath path;
 
     [SerializeField] private GameObject player;
 
@@ -47,11 +47,12 @@ public class EnemyController : MonoBehaviour
     void Awake()
     {
         Anim = GetComponent<Animator>();
-        enemyPath = GetComponent<AIPath>();
-        destination = GetComponent<AIDestinationSetter>();
+        mapMesh = GetComponent<NavMeshAgent>();
+        path = GetComponent<EnemyPath>();
 
         player = GameObject.Find("Player");
         resp = GameObject.Find("RespawnController").GetComponent<RespawnController>();
+
 
 
         i = resp.MonsterNumber;
@@ -84,13 +85,11 @@ public class EnemyController : MonoBehaviour
 
         Time = _enemys[i].Time;
 
-        destination.target = player.transform;
-
-        enemyPath.radius = Radius;
-        enemyPath.maxSpeed = Speed;
-
         Range = _enemys[i].Range < 1.11f ? 1.11f : _enemys[i].Range;
-        enemyPath.endReachedDistance = Range;
+
+
+        path.speed = mapMesh.speed = Speed;
+        path.range = Range;
     }
 
     // Update is called once per frame

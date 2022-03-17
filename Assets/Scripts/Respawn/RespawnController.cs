@@ -13,7 +13,7 @@ public class RespawnController : MonoBehaviour
         public int minutes;
         public int quantity;
         public int delay;
-        public int auxSec = 0;
+        internal int auxSec = 0;
 
         public bool moreThirty;
         public bool largeRespawnArea;
@@ -42,7 +42,6 @@ public class RespawnController : MonoBehaviour
     [Header("Timer")]
     [SerializeField] private TimerController timer;
     [SerializeField] private int maxTimer;
-    private int auxSec, auxSecUpdate;
     private int _random;
 
     [Header("Monsters")]
@@ -64,7 +63,6 @@ public class RespawnController : MonoBehaviour
 
     void Start()
     {
-        auxSec = auxSecUpdate = 0;
         for (int i = 0; i < maxTimer; i++)
         {
             List<Monsters> auxList = new List<Monsters>();
@@ -94,19 +92,19 @@ public class RespawnController : MonoBehaviour
             if (m.auxSec != 0 && m.auxSec + m.delay > timer.seconds)
                 continue;
 
-            m.auxSec = m.auxSec == 0 ? 1 : timer.seconds;
+            m.auxSec += 1;
 
             for (int i = 0; i < m.quantity; i++)
             {
                 Vector3 pos = new Vector3();
                 if (!m.largeRespawnArea)
                 {
-                    _random = UnityEngine.Random.Range(0, smallSpawnList.Count);
+                    _random = UnityEngine.Random.Range(1, smallSpawnList.Count);
                     pos = smallSpawnList[_random].position;
                 }
                 else
                 {
-                    _random = UnityEngine.Random.Range(0, largeSpawnList.Count);
+                    _random = UnityEngine.Random.Range(1, largeSpawnList.Count);
                     pos = largeSpawnList[_random].position;
                 }
                 MonsterNumber = m.monsterNumber;
