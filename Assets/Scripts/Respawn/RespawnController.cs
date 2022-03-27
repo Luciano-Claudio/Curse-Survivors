@@ -92,7 +92,7 @@ public class RespawnController : MonoBehaviour
             if (m.auxSec != 0 && m.auxSec + m.delay > timer.seconds)
                 continue;
 
-            m.auxSec += 1;
+            m.auxSec = 1 + timer.seconds;
 
             for (int i = 0; i < m.quantity; i++)
             {

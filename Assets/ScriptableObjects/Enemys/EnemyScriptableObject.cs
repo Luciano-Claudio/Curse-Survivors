@@ -9,6 +9,9 @@ public class EnemyScriptableObject : ScriptableObject
     public string Name;
 
     public float Radius;
+    public float ColliderX;
+    public float ColliderY;
+    public float Size;
 
     public float Armor;
     public float Life;
@@ -20,14 +23,16 @@ public class EnemyScriptableObject : ScriptableObject
     public float AtkSpeed;
     public float Speed;
     public float Duration;
-    public float Area;
 
     public int Amount;
 
     public bool Revival;
+    public bool NonColision;
 
     public GameObject Weapon;
 
     public int Time;
+
+    public bool Script;
 
 }

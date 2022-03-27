@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca22f1b92aee8d74c93e5d877df6aa9f, type: 3}
+  m_Name: Bat
+  m_EditorClassIdentifier: 
+  AnimController: {fileID: 9100000, guid: 259ab7acf4921264b8b0094c435ff3cf, type: 2}
+  Name: Bat
+  Radius: 0.12
+  ColliderX: 0.01
+  ColliderY: -0.13
+  Size: 1.5
+  Armor: 0
+  Life: 0
+  Range: 0
+  Damage: 0
+  Recovery: 0
+  LifeDrain: 0
+  Cooldown: 0
+  AtkSpeed: 0
+  Speed: 1
+  Duration: 0
+  Amount: 0
+  Revival: 0
+  NonColision: 1
+  Weapon: {fileID: 0}
+  Time: 0
+  Script: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class EnemyController : MonoBehaviour
     public string Name { get; private set; }
 
     public float Radius { get; private set; }
+    public float ColliderX { get; private set; }
+    public float ColliderY { get; private set; }
+    public float Size { get; private set; }
 
     public float Armor { get; private set; }
     public float Life { get; private set; }
@@ -21,11 +25,11 @@ public class EnemyController : MonoBehaviour
     public float AtkSpeed { get; private set; }
     public float Speed { get; private set; }
     public float Duration { get; private set; }
-    public float Area { get; private set; }
 
     public int Amount { get; private set; }
 
     public bool Revival { get; private set; }
+    public bool NonColision { get; private set; }
 
     public GameObject Weapon { get; private set; }
 
@@ -33,22 +37,26 @@ public class EnemyController : MonoBehaviour
 
 
 
+
     private int i = 0;
 
-    [SerializeField] private NavMeshAgent mapMesh;
-    [SerializeField] private EnemyPath path;
+    private NavMeshAgent agent;
+    private EnemyPath path;
+    private CircleCollider2D _collider;
 
-    [SerializeField] private GameObject player;
+    private GameObject player;
+
+    private RespawnController resp;
 
     [SerializeField] private List<EnemyScriptableObject> _enemys;
-    [SerializeField] private RespawnController resp;
 
 
     void Awake()
     {
         Anim = GetComponent<Animator>();
-        mapMesh = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
         path = GetComponent<EnemyPath>();
+        _collider = GetComponent<CircleCollider2D>();
 
         player = GameObject.Find("Player");
         resp = GameObject.Find("RespawnController").GetComponent<RespawnController>();
@@ -65,6 +73,9 @@ public class EnemyController : MonoBehaviour
         Name = _enemys[i].Name;
 
         Radius = _enemys[i].Radius;
+        ColliderX = _enemys[i].ColliderX;
+        ColliderY = _enemys[i].ColliderY;
+        Size = _enemys[i].Size;
 
         Armor = _enemys[i].Armor;
         Life = _enemys[i].Life;
@@ -75,26 +86,52 @@ public class EnemyController : MonoBehaviour
         AtkSpeed = _enemys[i].AtkSpeed;
         Speed = _enemys[i].Speed;
         Duration = _enemys[i].Duration;
-        Area = _enemys[i].Area;
 
         Amount = _enemys[i].Amount;
 
         Revival = _enemys[i].Revival;
+        NonColision = _enemys[i].NonColision;
 
         Weapon = _enemys[i].Weapon;
 
         Time = _enemys[i].Time;
 
-        Range = _enemys[i].Range < 1.11f ? 1.11f : _enemys[i].Range;
+        Range = _enemys[i].Range <= .8f ? .8f : _enemys[i].Range;
 
+        _collider.radius = path.radius = Radius;
+        _collider.offset = new Vector2(ColliderX, ColliderY);
 
-        path.speed = mapMesh.speed = Speed;
+        Size = UnityEngine.Random.Range(Size - .5f, Size + .5f);
+        transform.localScale = new Vector3(Size,Size,Size);
+
         path.range = Range;
+        path.nonColision = NonColision;
+
+
+        path.speed = agent.speed = Speed;
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+
+        if (NonColision)
+        {
+            agent.enabled = false;
+            gameObject.AddComponent<NonCollision>();
+        }
+
+        if (_enemys[i].Script) 
+        {
+            Type script = Type.GetType(Name);
+            gameObject.AddComponent(script);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void AddComponent(string name)
+    {
     }
 }
