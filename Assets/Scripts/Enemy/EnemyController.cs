@@ -42,7 +42,7 @@ public class EnemyController : MonoBehaviour
 
     private NavMeshAgent agent;
     private EnemyPath path;
-    private CircleCollider2D _collider;
+    [SerializeField] private CircleCollider2D _collider;
 
     private GameObject player;
 
@@ -56,18 +56,19 @@ public class EnemyController : MonoBehaviour
         Anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         path = GetComponent<EnemyPath>();
-        _collider = GetComponent<CircleCollider2D>();
+        _collider = GetComponentInChildren<CircleCollider2D>();
 
         player = GameObject.Find("Player");
         resp = GameObject.Find("RespawnController").GetComponent<RespawnController>();
 
 
-
         i = resp.MonsterNumber;
+
     }
 
     void Start()
     {
+
         Anim.runtimeAnimatorController = _enemys[i].AnimController;
 
         Name = _enemys[i].Name;
@@ -96,14 +97,16 @@ public class EnemyController : MonoBehaviour
 
         Time = _enemys[i].Time;
 
-        Range = _enemys[i].Range <= .8f ? .8f : _enemys[i].Range;
+        Range = _enemys[i].Range <= Radius ? Radius + .1f : _enemys[i].Range;
 
-        _collider.radius = path.radius = Radius;
-        _collider.offset = new Vector2(ColliderX, ColliderY);
+        _collider.radius = Radius;
+        _collider.transform.localPosition = new Vector3(ColliderX, ColliderY, 0);
+        path._collider = _collider;
 
         Size = UnityEngine.Random.Range(Size - .5f, Size + .5f);
-        transform.localScale = new Vector3(Size,Size,Size);
+        transform.localScale = new Vector3(Size, Size, Size);
 
+        path.size = Size;
         path.range = Range;
         path.nonColision = NonColision;
 
@@ -118,7 +121,7 @@ public class EnemyController : MonoBehaviour
             gameObject.AddComponent<NonCollision>();
         }
 
-        if (_enemys[i].Script) 
+        if (_enemys[i].Script)
         {
             Type script = Type.GetType(Name);
             gameObject.AddComponent(script);
@@ -128,7 +131,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void AddComponent(string name)

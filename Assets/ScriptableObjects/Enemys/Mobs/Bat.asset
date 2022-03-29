@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: Bat
   Radius: 0.12
   ColliderX: 0.01
-  ColliderY: -0.13
+  ColliderY: 0.38
   Size: 1.5
   Armor: 0
   Life: 0

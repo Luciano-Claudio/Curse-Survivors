@@ -6,23 +6,29 @@ public class GroundSize : MonoBehaviour
 {
     [SerializeField] private GameObject Ground;
 
-    [SerializeField] private float x = 47.5f;
-    [SerializeField] private float y = 47.5f;
+    [SerializeField] private float minX;
+    [SerializeField] private float minY;
+
+
+
+    private float x, y;
     Vector3 pos;
 
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < 96; i++)
+        x = minX;
+        y = minY;
+        for (int u = 0; u < 60; u++)
         {
-            for (int j = 0; j < 96; j++)
+            for (int i = 0; i < 102; i++)
             {
                 pos = new Vector3(x, y, 0);
-                Instantiate(Ground, pos, Quaternion.identity, transform);
-                x -= 1;
+                Instantiate(Ground, pos, Quaternion.identity);
+                x++;
             }
-            x = 47.5f;
-            y -= 1f;
+            y++;
+            x = minX;
         }
     }
 

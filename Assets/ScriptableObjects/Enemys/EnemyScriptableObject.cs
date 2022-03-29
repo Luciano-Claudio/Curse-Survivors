@@ -35,4 +35,5 @@ public class EnemyScriptableObject : ScriptableObject
 
     public bool Script;
 
+    
 }
