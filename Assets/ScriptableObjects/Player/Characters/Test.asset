@@ -23,7 +23,7 @@ MonoBehaviour:
   Lucky: 0
   Cooldown: 0
   AtkSpeed: 0
-  Speed: 2
+  Speed: 3
   Duration: 0
   Area: 0
   ExpGain: 0

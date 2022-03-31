@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class EnemyController : MonoBehaviour
 {
@@ -38,70 +39,76 @@ public class EnemyController : MonoBehaviour
 
 
 
-    private int i = 0;
+    private string respName;
 
     private NavMeshAgent agent;
     private EnemyPath path;
-    [SerializeField] private CircleCollider2D _collider;
+    private CircleCollider2D _collider;
 
     private GameObject player;
 
     private RespawnController resp;
 
-    [SerializeField] private List<EnemyScriptableObject> _enemys;
+    //[SerializeField] private List<EnemyScriptableObject> _enemys;
+    [SerializeField] private EnemyScriptableObject _enemy;
 
 
     void Awake()
     {
+
         Anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         path = GetComponent<EnemyPath>();
         _collider = GetComponentInChildren<CircleCollider2D>();
+        //_mobscClliderMobs = GetComponentsInChildren<CircleCollider2D>().FirstOrDefault(x => x.CompareTag("MobsColliderMobs"));
 
         player = GameObject.Find("Player");
         resp = GameObject.Find("RespawnController").GetComponent<RespawnController>();
 
 
-        i = resp.MonsterNumber;
+        respName = resp.MonsterName;
 
+        _enemy = Resources.Load<EnemyScriptableObject>("Mobs/" + respName);
     }
 
     void Start()
     {
 
-        Anim.runtimeAnimatorController = _enemys[i].AnimController;
+        Anim.runtimeAnimatorController = _enemy.AnimController;
 
-        Name = _enemys[i].Name;
+        Name = _enemy.Name;
 
-        Radius = _enemys[i].Radius;
-        ColliderX = _enemys[i].ColliderX;
-        ColliderY = _enemys[i].ColliderY;
-        Size = _enemys[i].Size;
+        Radius = _enemy.Radius;
+        ColliderX = _enemy.ColliderX;
+        ColliderY = _enemy.ColliderY;
+        Size = _enemy.Size;
 
-        Armor = _enemys[i].Armor;
-        Life = _enemys[i].Life;
-        Damage = _enemys[i].Damage;
-        Recovery = _enemys[i].Recovery;
-        LifeDrain = _enemys[i].LifeDrain;
-        Cooldown = _enemys[i].Cooldown;
-        AtkSpeed = _enemys[i].AtkSpeed;
-        Speed = _enemys[i].Speed;
-        Duration = _enemys[i].Duration;
+        Armor = _enemy.Armor;
+        Life = _enemy.Life;
+        Damage = _enemy.Damage;
+        Recovery = _enemy.Recovery;
+        LifeDrain = _enemy.LifeDrain;
+        Cooldown = _enemy.Cooldown;
+        AtkSpeed = _enemy.AtkSpeed;
+        Speed = _enemy.Speed;
+        Duration = _enemy.Duration;
 
-        Amount = _enemys[i].Amount;
+        Amount = _enemy.Amount;
 
-        Revival = _enemys[i].Revival;
-        NonColision = _enemys[i].NonColision;
+        Revival = _enemy.Revival;
+        NonColision = _enemy.NonColision;
 
-        Weapon = _enemys[i].Weapon;
+        Weapon = _enemy.Weapon;
 
-        Time = _enemys[i].Time;
+        Time = _enemy.Time;
 
-        Range = _enemys[i].Range <= Radius ? Radius + .1f : _enemys[i].Range;
+        Range = _enemy.Range <= Radius ? Radius + .1f : _enemy.Range;
 
         _collider.radius = Radius;
         _collider.transform.localPosition = new Vector3(ColliderX, ColliderY, 0);
         path._collider = _collider;
+
+
 
         Size = UnityEngine.Random.Range(Size - .5f, Size + .5f);
         transform.localScale = new Vector3(Size, Size, Size);
@@ -121,7 +128,7 @@ public class EnemyController : MonoBehaviour
             gameObject.AddComponent<NonCollision>();
         }
 
-        if (_enemys[i].Script)
+        if (_enemy.Script)
         {
             Type script = Type.GetType(Name);
             gameObject.AddComponent(script);

@@ -8,7 +8,7 @@ public class RespawnController : MonoBehaviour
     [System.Serializable]
     private class Monsters : IComparable
     {
-        public int monsterNumber;
+        public string monsterName;
 
         public int minutes;
         public int quantity;
@@ -29,7 +29,7 @@ public class RespawnController : MonoBehaviour
         }
     }
 
-    public int MonsterNumber { get; private set; }
+    public string MonsterName { get; private set; }
 
     [Header("Respawns")]
     [SerializeField] private Transform smallSpawnArea;
@@ -68,10 +68,9 @@ public class RespawnController : MonoBehaviour
             List<Monsters> auxList = new List<Monsters>();
             foreach (Monsters m in monsterList)
             {
-                if (m.minutes > i || m.minutes < i)
+                if (m.minutes != i)
                     continue;
-                if (m.minutes == i)
-                    auxList.Add(m);
+                auxList.Add(m);
             }
             monsterMatriz.Add(auxList);
         }
@@ -107,7 +106,7 @@ public class RespawnController : MonoBehaviour
                     _random = UnityEngine.Random.Range(1, largeSpawnList.Count);
                     pos = largeSpawnList[_random].position;
                 }
-                MonsterNumber = m.monsterNumber;
+                MonsterName = m.monsterName;
                 Instantiate(monster, pos, Quaternion.identity, monsterLocal);
             }
         }

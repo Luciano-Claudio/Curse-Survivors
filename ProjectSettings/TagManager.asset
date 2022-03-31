@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Mobs
   - Environment
+  - MobsColliderMobs
   layers:
   - Default
   - TransparentFX

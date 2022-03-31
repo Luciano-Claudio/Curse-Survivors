@@ -47,6 +47,7 @@ public class EnemyPath : MonoBehaviour
     {
         m_WhatIsPlayer = LayerMask.GetMask("Player");
         m_WhatIsEnvironment = LayerMask.GetMask("Environment");
+        agent.radius = 0;
     }
 
     void Update()
@@ -70,6 +71,8 @@ public class EnemyPath : MonoBehaviour
     {
         if (_distToPlayer > range && !stop)
             Walking();
+        else if(rb.velocity != Vector2.zero)
+            rb.velocity = Vector2.zero;
     }
 
     void Walking()
@@ -113,15 +116,10 @@ public class EnemyPath : MonoBehaviour
         walk = false;
     }
 
-    /*
-    private void OnDrawGizmos()
+    
+    /*private void OnDrawGizmos()
     {
         Gizmos.DrawLine(_colliderPos, _playerColliderPos);
-        Gizmos.DrawWireSphere(_colliderPos, _collider.radius * size + .05f);
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Mobs"))
-            rb.velocity = Vector2.zero;
+        Gizmos.DrawWireSphere(_colliderPos, _collider.radius * size + .01f);
     }*/
 }
