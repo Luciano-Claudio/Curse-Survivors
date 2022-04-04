@@ -29,7 +29,8 @@ public class HammerArea : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, hitRange, m_WhatIsMob);
         foreach(Collider2D enemy in hitEnemies)
         {
-            Debug.Log("We hit" + enemy.name);
+            //Debug.Log("We hit" + enemy.name);
+            Destroy(enemy.transform.parent.gameObject);
         }
 
     }
